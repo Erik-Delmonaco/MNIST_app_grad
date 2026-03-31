@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MNIST Random Viewer</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<main class="page">
+		<section class="card">
+			<h1>MNIST Random Image</h1>
+			<p>Click the button to fetch a random image from the test set.</p>
+
+			<button id="load-image-btn" type="button">Load Random Image</button>
+
+			<div class="canvas-wrap" aria-live="polite">
+				<canvas id="mnist-canvas" width="28" height="28"></canvas>
+			</div>
+
+			<p id="status-text" class="status">Waiting for input.</p>
+		</section>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>
