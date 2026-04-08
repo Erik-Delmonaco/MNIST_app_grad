@@ -3,22 +3,76 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>MNIST Random Viewer</title>
+	<title>MNIST Inference Flow</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 	<main class="page">
 		<section class="card">
-			<h1>MNIST Random Image</h1>
-			<p>Click the button to fetch a random image from the test set.</p>
+			<h1>CIFAR-10 Classifier Demo</h1>
+			<p class="subtitle">Load a random test image from CIFAR-10, then run it through your FFN to see the prediction.</p>
 
-			<button id="load-image-btn" type="button">Load Random Image</button>
+			<div class="layout">
+				<section class="panel image-panel" aria-labelledby="image-title">
+					<h2 id="image-title">Input Image</h2>
+					<div class="canvas-wrap" aria-live="polite">
+						<canvas id="mnist-canvas" width="28" height="28"></canvas>
+					</div>
+					<p class="meta">Index: <span id="image-index">-</span></p>
+					<button id="load-image-btn" type="button">1. Load Random Image</button>
+				</section>
 
-			<div class="canvas-wrap" aria-live="polite">
-				<canvas id="mnist-canvas" width="28" height="28"></canvas>
+				<section class="panel network-panel" aria-labelledby="network-title">
+					<h2 id="network-title">Network Flow</h2>
+					<div id="network-viz" class="network-viz" aria-label="Feedforward network visualization">
+						<div class="layer">
+							<span class="layer-name">Input</span>
+							<div class="nodes nodes-small">
+								<span></span><span></span><span></span><span></span><span></span>
+							</div>
+							<span class="layer-size">784</span>
+						</div>
+						<div class="pipe"></div>
+						<div class="layer">
+							<span class="layer-name">Dense + ReLU</span>
+							<div class="nodes">
+								<span></span><span></span><span></span><span></span><span></span><span></span>
+							</div>
+							<span class="layer-size">128</span>
+						</div>
+						<div class="pipe"></div>
+						<div class="layer">
+							<span class="layer-name">Dense + ReLU</span>
+							<div class="nodes">
+								<span></span><span></span><span></span><span></span><span></span>
+							</div>
+							<span class="layer-size">64</span>
+						</div>
+						<div class="pipe"></div>
+						<div class="layer">
+							<span class="layer-name">Output</span>
+							<div class="nodes nodes-small">
+								<span></span><span></span><span></span><span></span><span></span>
+							</div>
+							<span class="layer-size">10</span>
+						</div>
+					</div>
+					<button id="predict-btn" type="button" disabled>2. Run Prediction</button>
+					<button id="auto-run-btn" type="button">Start Auto Run</button>
+				</section>
+
+				<section class="panel result-panel" aria-labelledby="result-title">
+					<h2 id="result-title">Prediction</h2>
+					<div class="result-box">
+						<p class="result-line">Predicted: <span id="prediction-value">-</span></p>
+						<p class="result-line">Actual: <span id="label-value">-</span></p>
+						<p id="result-emoji" class="emoji" aria-live="polite">🙂</p>
+						<p id="result-message" class="result-message">Load an image, then run prediction.</p>
+					</div>
+				</section>
 			</div>
 
 			<p id="status-text" class="status">Waiting for input.</p>
